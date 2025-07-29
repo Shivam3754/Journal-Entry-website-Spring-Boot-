@@ -3,6 +3,7 @@ package com.projectmania.journalApp.service;
 import com.projectmania.journalApp.entity.JournalEntry;
 import com.projectmania.journalApp.entity.User;
 import com.projectmania.journalApp.repository.JournalEntryRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -12,6 +13,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
+@Slf4j
 @Component
 public class JournalEntryService {
 
@@ -20,6 +22,7 @@ public class JournalEntryService {
 
     @Autowired
     private UserService userService;
+
 
     @Transactional
     public void saveEntry(JournalEntry journalEntry, String userName) {
@@ -60,7 +63,7 @@ public class JournalEntryService {
                 journalEntryRepository.deleteById(id);
             }
         } catch(Exception e){
-            System.out.println(e);
+            log.error("Error", e);
             throw new  RuntimeException("An error occurred while deleting entry", e);
         }
         return removed;

@@ -3,6 +3,7 @@ package com.projectmania.journalApp.service;
 
 import com.projectmania.journalApp.entity.User;
 import com.projectmania.journalApp.repository.UserRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -14,6 +15,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Component
+@Slf4j
 public class UserService {
 
     @Autowired
@@ -23,9 +25,27 @@ public class UserService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    public void saveNewUser(User user) {
+
+
+    public boolean saveNewUser(User user) {
+        try {
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
+            user.setRoles(Arrays.asList("USER"));
+            userRepository.save(user);
+            return true;
+        }catch (Exception e){
+            log.error("Error while saving user");
+            log.warn("Error while saving user");
+            log.info("Error while saving user");
+            log.debug("Error while saving user");
+            log.trace("Error while saving user");
+            return false;
+        }
+    }
+
+    public void saveAdmin(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.setRoles(Arrays.asList("USER"));
+        user.setRoles(Arrays.asList("USER", "ADMIN"));
         userRepository.save(user);
     }
 

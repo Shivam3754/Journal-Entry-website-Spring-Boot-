@@ -9,8 +9,8 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -19,13 +19,13 @@ import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 @EnableWebSecurity
-@Profile("dev")
-public class SpringSecurity {
+@Profile("prod")
+public class SpringSecurityProd {
 
     @Autowired
     private UserDetailsServiceImpl userDetailsService;
 
-    public SpringSecurity(UserDetailsServiceImpl userDetailsService) {
+    public SpringSecurityProd(UserDetailsServiceImpl userDetailsService) {
         this.userDetailsService = userDetailsService;
     }
 
@@ -36,9 +36,7 @@ public class SpringSecurity {
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/journal/**", "/user/**").authenticated()
-                        .requestMatchers("/admin/**").hasAnyRole("ADMIN")
-                        .anyRequest().permitAll()
+                        .anyRequest().authenticated()
                 )
                 .httpBasic(Customizer.withDefaults()) // Enables HTTP Basic login
                 .build();
