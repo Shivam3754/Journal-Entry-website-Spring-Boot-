@@ -1,0 +1,11 @@
+spring:
+  data:
+    mongodb:
+      uri: mongodb+srv://shivam19bhard:Yatra1234@cluster1.g3xg4p1.mongodb.net/?retryWrites=true&w=majority&appName=Cluster1
+      authentication-database: journaldb
+      auto-index-creation: true
+
+server:
+  port: 8080
+  servlet:
+    context-path: /journal
