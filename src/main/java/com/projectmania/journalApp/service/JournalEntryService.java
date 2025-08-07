@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,16 +29,19 @@ public class JournalEntryService {
     public void saveEntry(JournalEntry journalEntry, String userName) {
         try {
             User user = userService.findByUsername(userName);
+            if (user.getJournalEntries() == null) {
+                user.setJournalEntries(new ArrayList<>());
+            }
             journalEntry.setDate(LocalDateTime.now());
             JournalEntry saved = journalEntryRepository.save(journalEntry);
             user.getJournalEntries().add(saved);
             userService.saveUser(user);
-        }catch(Exception e) {
-            System.out.println(e);
-            throw new RuntimeException("An error occured while saving entry", e);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException("An error occurred while saving entry", e);
         }
-
     }
+
 
     public void saveEntry(JournalEntry journalEntry) {
         journalEntry.setDate(LocalDateTime.now());

@@ -10,6 +10,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -27,27 +28,33 @@ public class UserService {
 
 
 
-    public boolean saveNewUser(User user) {
-        try {
-            user.setPassword(passwordEncoder.encode(user.getPassword()));
-            user.setRoles(Arrays.asList("USER"));
-            userRepository.save(user);
-            return true;
-        }catch (Exception e){
-            log.error("Error while saving user");
-            log.warn("Error while saving user");
-            log.info("Error while saving user");
-            log.debug("Error while saving user");
-            log.trace("Error while saving user");
-            return false;
+    private void ensureJournalEntriesInitialized(User user) {
+        if (user.getJournalEntries() == null) {
+            user.setJournalEntries(new ArrayList<>());
         }
     }
 
+
     public void saveAdmin(User user) {
+        ensureJournalEntriesInitialized(user);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setRoles(Arrays.asList("USER", "ADMIN"));
         userRepository.save(user);
     }
+
+    public boolean saveNewUser(User user) {
+        try {
+            ensureJournalEntriesInitialized(user);
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
+            user.setRoles(Arrays.asList("USER"));
+            userRepository.save(user);
+            return true;
+        } catch (Exception e) {
+            log.error("Error while saving user", e);
+            return false;
+        }
+    }
+
 
     public void saveUser(User user) {
         userRepository.save(user);
