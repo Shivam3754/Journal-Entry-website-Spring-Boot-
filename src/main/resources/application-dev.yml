@@ -4,6 +4,17 @@ spring:
       uri: mongodb+srv://shivam19bhard:Yatra1234@cluster1.g3xg4p1.mongodb.net/?retryWrites=true&w=majority&appName=Cluster1
       database: journaldb
       auto-index-creation: true
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: shivam19bhard@gmail.com
+    password: mciu jnpf wemj cvac
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
   main:
     allow-bean-definition-overriding: true
 
