@@ -1,5 +1,7 @@
 package com.projectmania.journalApp;
 
+import jakarta.annotation.PostConstruct;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -27,6 +29,15 @@ public class JournalApplication {
 	@Bean
 	public RestTemplate restTemplate(){
 		return new RestTemplate();
+	}
+
+	@Value("${spring.redis.host}")
+	private String redisHost;
+
+
+	@PostConstruct
+	public void logRedisHost() {
+		System.out.println("🚀 Using Redis host: " + redisHost);
 	}
 
 }

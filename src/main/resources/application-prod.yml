@@ -1,14 +1,34 @@
 spring:
+  redis:
+    host: redis-15358.c16.us-east-1-2.ec2.redns.redis-cloud.com
+    port: 15358
+    password: K36EdpjilIM8b2jQswcqOUsAFSsz7jNV
+    ssl: true
   data:
     mongodb:
       uri: mongodb+srv://shivam19bhard:Yatra1234@cluster1.g3xg4p1.mongodb.net/?retryWrites=true&w=majority&appName=Cluster1
       database: journaldb
       auto-index-creation: true
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: shivam19bhard@gmail.com
+    password: mciu jnpf wemj cvac
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
   main:
     allow-bean-definition-overriding: true
-
 
 server:
   port: 8080
   servlet:
     context-path: /journal
+
+weather:
+  api:
+    key: 7ad0988f97d6d64d7f98e8bd12e6e5f0
+

@@ -1,5 +1,13 @@
 spring:
+  redis:
+    host: redis-15358.c16.us-east-1-2.ec2.redns.redis-cloud.com
+    port: 15358
+    password: K36EdpjilIM8b2jQswcqOUsAFSsz7jNV
   data:
+    redis:
+      host: redis-15358.c16.us-east-1-2.ec2.redns.redis-cloud.com
+      port: 15358
+      password: K36EdpjilIM8b2jQswcqOUsAFSsz7jNV
     mongodb:
       uri: mongodb+srv://shivam19bhard:Yatra1234@cluster1.g3xg4p1.mongodb.net/?retryWrites=true&w=majority&appName=Cluster1
       database: journaldb
@@ -26,3 +34,4 @@ server:
 weather:
   api:
     key: 7ad0988f97d6d64d7f98e8bd12e6e5f0
+
